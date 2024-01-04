@@ -13,11 +13,6 @@ public enum Categoria {
         this.categoriaOmdb = categoriaOmdb;
     }
 
-    /*
-        Metodo irá converter dinamicamente o valor textual que vem do OMDB para
-        os valores que estão dentro da categoria de enum
-
-     */
     public static Categoria fromString(String text) {
         for (Categoria categoria : Categoria.values()) {
             if (categoria.categoriaOmdb.equalsIgnoreCase(text)) {
@@ -26,10 +21,7 @@ public enum Categoria {
         }
         throw new IllegalArgumentException("Nenhuma categoria encontrada para a string fornecida: " + text);
     }
-
-
-
-
-
-
 }
+
+
+
