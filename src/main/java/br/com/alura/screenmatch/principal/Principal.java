@@ -40,7 +40,8 @@ public class Principal {
                 5 - Buscar séries por ator
                 6 - Top 5 series
                 7 - Buscar Serie Por Categoria
-                8 - Busca Serie por Tamanho de Temporadas
+                8 - Filtrar Séries
+                9 - Buscar por trecho de episodio
                 
                 0 - Sair                                 
                 """;
@@ -72,6 +73,9 @@ public class Principal {
                 break;
             case 8:
                 buscarTamanhoTemporada();
+                break;
+            case 9:
+                buscarEpisodioPorTrecho();
                 break;
             case 0:
                 System.out.println("Saindo...");
@@ -188,10 +192,21 @@ public class Principal {
         System.out.println("Avalições a partir de qual valor? ");
         var avaliacao = leitura.nextDouble();
 
-        List<Serie> serieEncontrada = repositorio.findByTotalTemporadasGreaterThanEqualAndAvaliacaoGreaterThanEqual(totalTemporadas, avaliacao);
+        List<Serie> serieEncontrada = repositorio.seriePorTemporadaEAValiacao(totalTemporadas, avaliacao);
 
         serieEncontrada.forEach(s -> System.out.println("Nome Serie: " + s.getTitulo() + " avaliação: " + s.getAvaliacao()));
 
     }
+
+    private void buscarEpisodioPorTrecho() {
+        System.out.println("Qual nome do episodio para busca?");
+        var trechoEpisodio = leitura.nextLine();
+        List<Episodio> episodiosEncontrados = repositorio.episodiosPorTrechos(trechoEpisodio);
+        episodiosEncontrados.forEach(e ->
+                System.out.printf("Série: %s Temporada %s - Episodio %s - %s\n",
+                        e.getSerie().getTitulo(), e.getTemporada(),
+                        e.getNumeroEpisodio(), e.getTitulo()));
+    }
+
 
 }
