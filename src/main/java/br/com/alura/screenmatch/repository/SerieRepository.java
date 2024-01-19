@@ -29,7 +29,7 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
     /*
     Consulta JPQL -> Query JPQL
      */
-    @Query("select s from Serie s WHERe s.totalTemporadas <= totalTemporadas AND s.avaliacao >= avaliacao")
+    @Query("select s FROM Serie s WHERE s.totalTemporadas <= totalTemporadas AND s.avaliacao >= avaliacao")
     List<Serie> seriePorTemporadaEAValiacao(Integer totalTemporadas, Double avaliacao);
 
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE e.titulo ILIKE %:trechoEpisodio%")
@@ -38,4 +38,7 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
     //Query JQPL
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s =:serie ORDER BY e.avaliacao DESC LIMIT 5 ")
     List<Episodio> topEpisodiosPorSerie(Serie serie);
+
+    @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s= :serie AND YEAR(e.dataLancamento) >= :anoLancamento")
+    List<Episodio> episodiosPorSerieEAno(Serie serie, int anoLancamento);
 }
